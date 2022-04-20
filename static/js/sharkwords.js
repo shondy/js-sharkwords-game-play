@@ -1,18 +1,18 @@
 const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
-const WORDS = [
-  'strawberry',
-  'orange',
-  'apple',
-  'banana',
-  'pineapple',
-  'kiwi',
-  'peach',
-  'pecan',
-  'eggplant',
-  'durian',
-  'peanut',
-  'chocolate',
-];
+// const WORDS = [
+//   'strawberry',
+//   'orange',
+//   'apple',
+//   'banana',
+//   'pineapple',
+//   'kiwi',
+//   'peach',
+//   'pecan',
+//   'eggplant',
+//   'durian',
+//   'peanut',
+//   'chocolate',
+// ];
 
 let numWrong = 0;
 
@@ -90,9 +90,8 @@ const resetGame = () => {
 
 // This is like if __name__ == '__main__' in Python
 //
-(function startGame() {
-  // For now, we'll hardcode the word that the user has to guess.
-  const word = 'hello';
+// (function startGame() { 
+function startGame(word) {
   let correctLettersNum = 0;
 
   createDivsForChars(word);
@@ -129,4 +128,8 @@ const resetGame = () => {
   playAgain.addEventListener('click', (evt) => {
     resetGame();
   });
-})();
+}
+// })(); 
+// with paranthesies in previous line we involve function immediately after 
+// declaration and we need also ( infront of funcion defenition
+
