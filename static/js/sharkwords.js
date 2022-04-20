@@ -49,11 +49,14 @@ const isLetterInWord = (letter) => document.querySelector(`div.${letter}`) !== n
 
 // Called when `letter` is in word. Update contents of divs with `letter`.
 //
-const handleCorrectGuess = (letter) => {
+const handleCorrectGuess = (letter, correctLettersNum) => {
   const correctLetters = document.querySelectorAll(`div.${letter}`);
   for (const correctLetter of correctLetters) {
     correctLetter.innerHTML = letter;
+    correctLettersNum += 1;
+    // console.log(correctLettersNum);
   }
+  return correctLettersNum;
 };
 
 //
@@ -66,7 +69,7 @@ const handleCorrectGuess = (letter) => {
 const handleWrongGuess = () => {
   numWrong += 1;
   if (numWrong >= 5) {
-    const disableButtons = document.querySelectorAll('button');
+    const disableButtons = document.querySelectorAll('#letter-buttons button');
     for (const button of disableButtons) {
       disableLetterButton(button);
     }
@@ -74,7 +77,7 @@ const handleWrongGuess = () => {
   } else {
     console.log("wrong letter", numWrong);
     
-    const newImage = document.querySelector("img");
+    const newImage = document.querySelector("#shark-img img");
     // console.log(newImage);
     newImage.setAttribute('src',`/static/images/guess${numWrong}.png`);
   }
@@ -90,6 +93,7 @@ const resetGame = () => {
 (function startGame() {
   // For now, we'll hardcode the word that the user has to guess.
   const word = 'hello';
+  let correctLettersNum = 0;
 
   createDivsForChars(word);
   generateLetterButtons();
@@ -105,17 +109,24 @@ const resetGame = () => {
     
       // you should then check if the currently clicked letter is in the word
       if (isLetterInWord(letter)){
-        handleCorrectGuess(letter);
+        correctLettersNum = handleCorrectGuess(letter, correctLettersNum);
+        if (correctLettersNum === word.length){
+          const disableButtons = document.querySelectorAll('#letter-buttons button');
+          for (const button of disableButtons) {
+            disableLetterButton(button);
+          }
+          document.getElementById("win").style.display = "inline";
+          document.getElementById("play-again").style.display = "inline";
+        }
       } else {
         handleWrongGuess();
-      }
-    
-      // if it is, call `handleCorrectGuess`
-    
-      // if it is not, call `handleWrongGuess`
+      }    
     });
   }
 
   // add an event handler to handle clicking on the Play Again button
-  // YOUR CODE HERE
+  playAgain = document.getElementById("play-again")
+  playAgain.addEventListener('click', (evt) => {
+    resetGame();
+  });
 })();
